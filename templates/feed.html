@@ -1,0 +1,84 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+Feed
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for( '.static', filename='feed.css' ) }}" >
+{% endblock %}
+
+{% block content %}
+<div class ="nav_bar">
+    <div >
+      <ul>
+        <li><a href="{{ url_for( 'Feed' )}}"> Feed</a></li>
+        <li><a href="{{ url_for( 'Home' )}}"> Log Out</a></li>
+      </ul>
+    </div>
+</div>
+
+<h3 style="color: #008000; text-align: center; font-family:Times New Roman ;">Ask or Answer</h3>
+
+<form action="/Feed", method='POST'>
+   {{form.hidden_tag()}}
+   <div style="padding: 15px;padding-bottom: 0%">
+      <div style="color: #008000;" >
+        {{ wtf.form_field(form.question) }}
+    </div>
+  </div>
+
+    <div style="padding: 15px ; text-align: center;">
+      <input type=submit value="Publish">
+    </div>
+
+  <div style="background-color:#ffffff;font-size: 100% ;">
+    <h2 style="text-align: center;">Questions</h2>
+    <p> 
+    <ol> 
+      {% for ques in new_questions  %}
+          <li>{{ ques.question }}</li>
+        {% endfor %} 
+    </ol>
+    </p>
+  </div>
+
+</form>
+
+<form action="/Feed", method='POST'>       
+   {{form.hidden_tag()}}
+
+  <div style="margin: 15px; margin-right: 0% ; width:75% ; float: left;">     
+    <div style="color: #008000;" >
+        {{  wtf.form_field(form2.answer) }}
+   </div>
+  </div>
+
+  
+  <div style="margin: 15px; margin-right: 1% ; float: right; width:20%;">     
+    <div style="color: #008000;" >
+        {{  wtf.form_field(form2.qnumber) }}
+   </div>
+  </div>
+
+    <div style="padding: 15px ; text-align: center;">
+      <input type=submit value="Publish">
+    </div> 
+  
+   <div  style="background-color:#ffffff;font-size: 100%; padding: 15px;padding-bottom: 0%">
+    <h2 style="text-align: center;">Answers</h2>
+    <p>
+      {% for ans in new_answers  %}
+          <li>Answer for question no : {{ ans.qnumber }} ------> {{ ans.answer }}</li>
+        {% endfor %} 
+    </p>
+  </div>
+
+</form>
+
+
+  
+{% endblock %}
